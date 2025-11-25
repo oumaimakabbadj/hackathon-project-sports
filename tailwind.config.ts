@@ -9,13 +9,17 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                sport: {
-                    primary: "#3B82F6", // Athletic Blue
-                    secondary: "#10B981", // Health Green
-                    dark: "#1E293B",
-                    light: "#F1F5F9",
+                brand: {
+                    dark: "#0F172A",     // Deep Navy
+                    primary: "#3B82F6",  // Athletic Blue
+                    accent: "#F59E0B",   // Energy Orange
+                    success: "#10B981",  // Health Green
+                    bg: "#F8FAFC",       // Clean Background
                 }
             },
+            fontFamily: {
+                sans: ['var(--font-inter)'],
+            }
         },
     },
     plugins: [],

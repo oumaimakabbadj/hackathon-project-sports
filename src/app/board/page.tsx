@@ -1,93 +1,103 @@
 "use client";
+import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { useState } from "react";
+import { Users, MessageCircle } from "lucide-react";
 
-export default function BoardPage() {
-  const [activeTab, setActiveTab] = useState("rooms");
+export default function Board() {
+  const [view, setView] = useState<"rooms" | "posts">("rooms");
 
   return (
-    <div className="max-w-4xl mx-auto h-screen flex flex-col">
-      <Header />
+    <div className="flex min-h-screen bg-[#F8FAFC]">
+      <Sidebar />
+      <main className="ml-64 flex-1 flex flex-col">
+        <Header />
+        <div className="p-8">
+          {/* Tabs */}
+          <div className="flex gap-4 mb-8">
+            <button
+              onClick={() => setView("rooms")}
+              className={`px-6 py-3 rounded-xl font-bold transition ${
+                view === "rooms"
+                  ? "bg-brand-primary text-white shadow-lg shadow-blue-200"
+                  : "bg-white text-slate-500"
+              }`}
+            >
+              Chat Rooms
+            </button>
+            <button
+              onClick={() => setView("posts")}
+              className={`px-6 py-3 rounded-xl font-bold transition ${
+                view === "posts"
+                  ? "bg-brand-primary text-white shadow-lg shadow-blue-200"
+                  : "bg-white text-slate-500"
+              }`}
+            >
+              Community Posts
+            </button>
+          </div>
 
-      <div className="mt-4 flex-1 flex flex-col bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden">
-        {/* Tabs */}
-        <div className="flex border-b border-gray-200">
-          <button
-            onClick={() => setActiveTab("rooms")}
-            className={`flex-1 py-4 text-center font-bold ${
-              activeTab === "rooms"
-                ? "text-sport-primary border-b-2 border-sport-primary"
-                : "text-gray-500"
-            }`}
-          >
-            Chat Rooms
-          </button>
-          <button
-            onClick={() => setActiveTab("posts")}
-            className={`flex-1 py-4 text-center font-bold ${
-              activeTab === "posts"
-                ? "text-sport-primary border-b-2 border-sport-primary"
-                : "text-gray-500"
-            }`}
-          >
-            Community Posts
-          </button>
-        </div>
-
-        {/* Content Area */}
-        <div className="flex-1 p-6 bg-gray-50">
-          {activeTab === "rooms" ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Room Cards */}
+          {view === "rooms" ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                "Marathon Prep",
-                "Yoga Beginners",
-                "Healthy Eating",
-                "Gym Bros",
+                { name: "Running Club", count: 124, color: "bg-orange-500" },
+                { name: "Yoga & Zen", count: 85, color: "bg-purple-500" },
+                { name: "Musculation", count: 230, color: "bg-red-500" },
+                { name: "Nutrition", count: 90, color: "bg-green-500" },
               ].map((room) => (
                 <div
-                  key={room}
-                  className="bg-white p-6 rounded-xl shadow-sm border hover:border-sport-primary cursor-pointer transition"
+                  key={room.name}
+                  className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all cursor-pointer group"
                 >
-                  <h3 className="font-bold text-lg mb-2">{room}</h3>
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full border-2 border-white"></div>
-                    <div className="w-8 h-8 bg-gray-400 rounded-full border-2 border-white"></div>
-                    <div className="w-8 h-8 bg-gray-500 rounded-full border-2 border-white text-xs flex items-center justify-center text-white">
-                      +12
-                    </div>
+                  <div
+                    className={`w-12 h-12 ${room.color} rounded-2xl mb-4 flex items-center justify-center text-white shadow-md`}
+                  >
+                    <Users size={24} />
                   </div>
-                  <button className="mt-4 w-full py-2 bg-blue-50 text-sport-primary rounded-lg font-semibold text-sm">
-                    Join Room
+                  <h3 className="text-xl font-bold text-slate-800">
+                    {room.name}
+                  </h3>
+                  <p className="text-slate-500 mt-1">
+                    {room.count} membres actifs
+                  </p>
+                  <button className="mt-6 w-full py-2 bg-slate-50 text-slate-700 font-semibold rounded-xl group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                    Rejoindre
                   </button>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="space-y-4">
-              {/* Reddit Style Post Placeholder */}
-              <div className="bg-white p-6 rounded-xl shadow-sm border">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-gray-500">
-                    u/Runner99
-                  </span>
-                  <span className="text-xs text-gray-400">• 2h ago</span>
+            <div className="space-y-4 max-w-3xl">
+              {[1, 2, 3].map((post) => (
+                <div
+                  key={post}
+                  className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-slate-200" />
+                    <span className="font-bold text-sm text-slate-700">
+                      SarahRunner
+                    </span>
+                    <span className="text-xs text-slate-400">• Il y a 2h</span>
+                  </div>
+                  <h3 className="font-bold text-lg text-slate-800">
+                    Conseils pour le marathon de Paris ?
+                  </h3>
+                  <p className="text-slate-600 mt-2">
+                    Je me prépare pour mon premier marathon et je cherche des
+                    conseils sur l'alimentation la semaine avant la course.
+                  </p>
+                  <div className="mt-4 flex gap-4 text-slate-400 text-sm font-semibold">
+                    <span className="flex items-center gap-1 hover:text-brand-primary cursor-pointer">
+                      <MessageCircle size={16} /> 15 Réponses
+                    </span>
+                  </div>
                 </div>
-                <h3 className="font-bold text-lg">
-                  Comment améliorer mon cardio en 2 semaines ?
-                </h3>
-                <p className="text-gray-600 mt-2 text-sm">
-                  Je prépare une compétition et j&apos;ai besoin de conseils...
-                </p>
-                <div className="mt-4 flex gap-4 text-gray-500 text-sm">
-                  <span>⇧ 45</span>
-                  <span>💬 12 Comments</span>
-                </div>
-              </div>
+              ))}
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -1,40 +1,30 @@
 "use client";
 import { Lightbulb } from "lucide-react";
 
-const facts = [
-  "Le cœur d'un athlète peut pomper jusqu'à 35 litres de sang par minute pendant l'effort.",
-  "Faire du sport libère des endorphines, l'hormone du bonheur.",
-  "La natation est le seul sport qui sollicite tous les muscles du corps simultanément.",
-  "Dormir suffisamment est aussi important que l'entraînement pour la récupération musculaire.",
-];
-
 export default function FunFact() {
-  // Simple logic to pick a fact based on the day of the year (so it changes daily)
-  const dayOfYear = Math.floor(
-    (new Date().getTime() -
-      new Date(new Date().getFullYear(), 0, 0).getTime()) /
-      1000 /
-      60 /
-      60 /
-      24,
-  );
-  const fact = facts[dayOfYear % facts.length];
-
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 flex items-start gap-4 mt-6">
-      <div className="bg-orange-100 p-3 rounded-full">
-        <Lightbulb className="w-6 h-6 text-orange-500" />
+    <div className="h-full bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+
+      <div className="flex items-center gap-4 mb-4">
+        <div className="p-3 bg-brand-accent/10 rounded-xl text-brand-accent">
+          <Lightbulb className="w-6 h-6" />
+        </div>
+        <h3 className="font-bold text-slate-800 text-lg">Le Saviez-vous ?</h3>
       </div>
-      <div>
-        <h3 className="font-bold text-gray-800 text-lg mb-1">
-          Le saviez-vous ?
-        </h3>
-        <p className="text-gray-600 italic leading-relaxed">
-          &quot;{fact}&quot;
-        </p>
-        <p className="text-xs text-gray-400 mt-2 font-semibold uppercase tracking-wider">
-          Santé & Sport
-        </p>
+
+      <p className="text-slate-600 leading-relaxed text-lg">
+        "Les séances de sport le soir peuvent vous aider à vous endormir plus
+        vite, à condition de laisser 1h de repos avant le coucher."
+      </p>
+
+      <div className="mt-6 flex gap-2">
+        <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-bold uppercase tracking-wide">
+          Sommeil
+        </span>
+        <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-bold uppercase tracking-wide">
+          Récupération
+        </span>
       </div>
     </div>
   );
